@@ -1,3 +1,12 @@
+#CyberTalents PureLuck Reverse Engineering Challenge.
+#Initial analysis showed the file was packed via UPX.
+#Downloaded and ran upx-ucl to unpack it.
+#Analyzed the new file in ghidra.
+#Found main function.
+#It adds random hex values to the stack and I added them to a file called flaglist.txt.
+#Ran this script against it to return the flag.
+
+
 #open file as flaglist variable
 with open('./flaglist.txt', 'r') as flaglist:
 	
