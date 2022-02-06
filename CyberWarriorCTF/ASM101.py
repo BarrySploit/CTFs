@@ -28,3 +28,69 @@ for i in range(0000,99999999):
   #check to see what makes the cmp intruction true!
 	if seventh == 43270380:
 		print(i)
+
+		#THIS IS THE ASSEMBLY GIVEN
+#flag_checker:
+#        push    rbp
+#        mov     rbp, rsp
+#        mov     DWORD PTR [rbp-4], edi
+#        xor     DWORD PTR [rbp-4], 1333337
+#        add     DWORD PTR [rbp-4], 1337
+#        sub     DWORD PTR [rbp-4], 133337
+#        mov     edx, DWORD PTR [rbp-4]
+#        mov     eax, edx
+#        add     eax, eax
+#        add     eax, edx
+#        mov     DWORD PTR [rbp-4], eax
+#        mov     edx, DWORD PTR [rbp-4]
+#        mov     eax, edx
+#        add     eax, eax
+#        add     eax, edx
+#        add     eax, eax
+#        mov     DWORD PTR [rbp-4], eax
+#        sal     DWORD PTR [rbp-4]
+#        cmp     DWORD PTR [rbp-4], 43270380
+#        jne     .L2
+#        mov     eax, 1
+#        jmp     .L3
+#.L2:
+#        mov     eax, 0
+#.L3:
+#        pop     rbp
+#        ret
+#.LC0:
+#        .string "Enter the secret number: "
+#.LC1:
+#        .string "%d"
+#.LC2:
+#        .string "Correct number :D"
+#.LC3:
+#        .string "Wrong number :p"
+#main:
+#        push    rbp
+#        mov     rbp, rsp
+#        sub     rsp, 16
+#        mov     edi, OFFSET FLAT:.LC0
+#        mov     eax, 0
+#        call    printf
+#        lea     rax, [rbp-8]
+#        mov     rsi, rax
+#        mov     edi, OFFSET FLAT:.LC1
+#        mov     eax, 0
+#        call    __isoc99_scanf
+#        mov     eax, DWORD PTR [rbp-8]
+#        mov     edi, eax
+#        call    flag_checker
+#        mov     DWORD PTR [rbp-4], eax
+#        cmp     DWORD PTR [rbp-4], 0
+#        je      .L5
+#        mov     edi, OFFSET FLAT:.LC2
+#        call    puts
+#        jmp     .L6
+#.L5:
+#        mov     edi, OFFSET FLAT:.LC3
+#        call    puts
+#.L6:
+#        mov     eax, 0
+#        leave
+#        ret
