@@ -2,6 +2,7 @@
 #Until we get a match for the given user hashes
 
 #read list of user hashes
+import hashlib
 with open('./passwords.txt', 'r') as passwords:
     passlist = []
     for i in passwords.readlines():
