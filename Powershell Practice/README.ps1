@@ -1,1 +1,1 @@
-Placeholder for upcoming Powershell scripts
+echo "This is a test"
