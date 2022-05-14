@@ -1,3 +1,6 @@
+#Made the orginal script benign
+#Script functions properly and returns decrypted version of what would execute
+#Flag is found in output
 function encr {
     param(
         [Byte[]]$data,
