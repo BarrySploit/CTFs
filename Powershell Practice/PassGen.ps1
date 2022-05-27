@@ -1,4 +1,5 @@
-﻿$count = Read-Host -Prompt "How long would you like your password?"
+#work in progress
+$count = Read-Host -Prompt "How long would you like your password?"
 $upper = [char[]] (([char]'A')..([char]'Z'))
 $lower = [char[]] (([char]'a')..([char]'z'))
 $numbers = [char[]] (([char]'0')..([char]'9'))
