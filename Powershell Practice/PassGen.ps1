@@ -1,4 +1,10 @@
-﻿#Defined lists
+#DO NOT ACTUALLY USE THIS AS A PASSWORD MANAGER
+#THIS IS NOT A SECURE METHOD
+#Plaintext passwords are still stored in memory during processing and can show up in transcription logs
+#"Ciphertext" is actually just obfuscated and not encrypted.
+
+
+#Defined lists
 $upper = [char[]] (([char]'A')..([char]'Z'))
 $lower = [char[]] (([char]'a')..([char]'z'))
 $numbers = [char[]] (([char]'0')..([char]'9'))
