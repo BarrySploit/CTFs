@@ -1,3 +1,6 @@
+#better version of the Powershell Password Generator
+#Uses AES encryption to secure stored passwords. Plaintext password is not stored in program.
+#Tracks account information and passwords
 import string
 import random
 import base64
@@ -8,12 +11,13 @@ from Crypto.Util.Padding import pad
 from Crypto.Util.Padding import unpad
 import hashlib
 
+#define lists of possible characters
 char_list = []
 char_string = string.ascii_letters + string.digits + '!@#$%^&*()?'
 for i in char_string:
         char_list.append(i)
 
-
+#make sure key is 16 in length. Encrypt passwords with secret key. Save in format of IV:CipherText
 def aes_encryption(string):
         while len(key) < 16:
                 key += "A"
@@ -24,6 +28,7 @@ def aes_encryption(string):
         result = iv + ":"+ct
         return result
 
+#Use IV and Ciphertext with secret key to decrypt the passwords
 def aes_decryption(string):
         while len(key) < 16:
                 key += "A"
@@ -34,6 +39,7 @@ def aes_decryption(string):
         pt = unpad(cipher.decrypt(ct), AES.block_size)
         return pt
 
+#Generate random password of given length (at least 12)
 def Gen_Password():
         password = ''
         count = input("How long would you like your password to be?\n")
@@ -44,6 +50,7 @@ def Gen_Password():
                 password+=char
         return password
 
+#add new entry to CSV file
 def new_account():
         email = input("What is your email?\n")
         website = input("What website is this for?\n")
@@ -61,6 +68,7 @@ def new_account():
                         password = aes_encryption(password)
                         writer.writerow({'Email':email, 'Website':website, 'Password':password})
 
+#Change password of existing entry
 def change_password():
         website = input("What website do you want to change the password for?\n")
         GenPassOrNah = input("Are you using your own password? Yes/No.'No' will generate a secure password for you!\n")
@@ -81,6 +89,7 @@ def change_password():
         df['Password'] = df['Password'].replace({password:encrypted})
         df.to_csv(path, index=False)
 
+#Retrieve stored password
 def check_password():
         website = input("What website do you want to check the password for?\n")
         with open(path, 'r', newline='') as file:
@@ -92,7 +101,8 @@ def check_password():
                                 decrypted = aes_decryption(password).decode('utf-8')
                                 print("The password for "+str(website)+" equals "+str(decrypted)+"\n")
                                 break
-
+                                
+#Continuously loop until user decides to exit
 def main():
         while True:
                 to_do = input("What would you like to do? \n1) Add a new account. \n2) Change an existing password. \n3) Check a password. \n4) Exit the program.\n")
@@ -106,10 +116,13 @@ def main():
                         exit()
                 main()
 
+                
 if __name__ == "__main__":
         existing_file = input("Do you currently have an existing password sheet? Yes/No\n")
+        #Get existing CSV file
         if existing_file.lower() == 'yes':
                 path = input("What is the path to your password file?\n")
+                #Enter secret key and compare to stored hash in hash.txt
                 secret_key = input("What is the secret key?").encode('utf-8')
                 secret_path = "hash.txt"
                 with open(secret_path, 'r') as f:
