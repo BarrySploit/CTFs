@@ -18,9 +18,11 @@ for i in char_string:
         char_list.append(i)
 
 #make sure key is 16 in length. Encrypt passwords with secret key. Save in format of IV:CipherText
-def aes_encryption(string):
+def aes_encryption(string, key):
         while len(key) < 16:
                 key += "A"
+        if len(key) > 16:
+                key = key[:16]
         cipher = AES.new(key.encode('utf-8'),AES.MODE_CBC)
         ciphertext= cipher.encrypt(pad(string.encode('utf-8'),AES.block_size))
         iv = base64.b64encode(cipher.iv).decode('utf-8')
@@ -29,9 +31,11 @@ def aes_encryption(string):
         return result
 
 #Use IV and Ciphertext with secret key to decrypt the passwords
-def aes_decryption(string):
+def aes_decryption(string, key):
         while len(key) < 16:
                 key += "A"
+        if len(key) > 16:
+                key = key[:16]
         encrypted = string.split(':')
         iv = base64.b64decode(encrypted[0])
         ct = base64.b64decode(encrypted[1])
@@ -60,12 +64,12 @@ def new_account():
                 writer = csv.DictWriter(file, fieldnames = fieldnames)
                 if own_password.lower() == "yes":
                         password = input("What password do you want to use?\n")
-                        password = aes_encryption(password)
+                        password = aes_encryption(password,key)
                         writer.writerow({'Email':email, 'Website':website, 'Password':password})
                 if own_password.lower() == "no":
                         password = Gen_Password()
                         print("Your password is "+ password+"\n")
-                        password = aes_encryption(password)
+                        password = aes_encryption(password,key)
                         writer.writerow({'Email':email, 'Website':website, 'Password':password})
 
 #Change password of existing entry
@@ -83,7 +87,7 @@ def change_password():
                                         user_pass = input("What is the password you want to use?\n")
                                 if GenPassOrNah.lower() =='no':
                                         user_pass = Gen_Password()
-                                encrypted = aes_encryption(user_pass)
+                                encrypted = aes_encryption(user_pass,key)
                                 break   
         df = pd.read_csv(path)
         df['Password'] = df['Password'].replace({password:encrypted})
@@ -98,7 +102,7 @@ def check_password():
                 for row in reader:
                         if row['Website'] == website:
                                 password = row['Password']
-                                decrypted = aes_decryption(password).decode('utf-8')
+                                decrypted = aes_decryption(password,key).decode('utf-8')
                                 print("The password for "+str(website)+" equals "+str(decrypted)+"\n")
                                 break
                                 
@@ -123,11 +127,11 @@ if __name__ == "__main__":
         if existing_file.lower() == 'yes':
                 path = input("What is the path to your password file?\n")
                 #Enter secret key and compare to stored hash in hash.txt
-                secret_key = input("What is the secret key?").encode('utf-8')
+                key = input("What is the secret key?\n")
                 secret_path = "hash.txt"
                 with open(secret_path, 'r') as f:
                         secret = f.read()
-                        secret_hash = hashlib.sha256(secret_key).hexdigest()
+                        secret_hash = hashlib.sha256(key.encode('utf-8')).hexdigest()
                         if secret_hash != secret:
                                 print("Wrong secret key!!!")
                                 print(secret_hash)
@@ -140,7 +144,7 @@ if __name__ == "__main__":
                         writer = csv.DictWriter(file, fieldnames = fieldnames)
                         writer.writeheader()
                 with open("hash.txt",'w') as f:
-                        secret = input("What do you want your secret key to be? WARNING: This will overwrite current hash.txt if it exists.\nOld Passwords will be unrecoverable.\n")
-                        secret_hash = hashlib.sha256(secret.encode('utf-8')).digest()
+                        key = input("What do you want your secret key to be? WARNING: This will overwrite current hash.txt if it exists.\nOld Passwords will be unrecoverable.\n")
+                        secret_hash = hashlib.sha256(key.encode('utf-8')).hexdigest()
                         f.write(secret_hash)
         main()
