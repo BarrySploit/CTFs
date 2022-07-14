@@ -52,7 +52,7 @@ function Encrypt-Files{
         $bytes = Get-Content -Path $path -Encoding Byte -Raw
         $plaintext = [System.Convert]::ToBase64String($bytes)
         $plaintext | Protect-CmsMessage -To $cert -OutFile $newfile
-        Remove-Item -Path $path
+        Remove-Item -Path $path -Force
         
     }
 }
