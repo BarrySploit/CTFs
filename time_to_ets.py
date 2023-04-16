@@ -31,7 +31,7 @@ def send_notifications():
 		icon_path = ".\\download.ico",
 		threaded = True,
 		)
-#android notification
+	#android notification
 	print("***Sending telegram message***")
 	id = "6218744091"
 	token = "6012387725:AAFOgyxlgmyxZ-4vJVwPIzF6Q7UfhrB7SKw"
