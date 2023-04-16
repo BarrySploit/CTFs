@@ -16,7 +16,7 @@ while True:
 		"Time until ETS",
 		final,
 		duration = 20,
-		icon_path = "C:\\users\\trans\\Downloads\\download.ico",
+		icon_path = ".\\download.ico",
 		threaded = True,
 	)
 	time.sleep(600)
