@@ -40,3 +40,5 @@ def main():
 		send_notifications()
 		time.sleep(600)
 		
+if __name__ == "__main__":
+	main()
