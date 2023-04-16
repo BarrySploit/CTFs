@@ -16,6 +16,7 @@ final = f'{int(days)} days, {int(leftover_hours)} hours, and {int(leftover_min)}
 print("Sending windows notification")
 toast = ToastNotifier()
 while True:
+	print("Sending windows notification")
 	toast.show_toast(
 		"Time until ETS",
 		final,
@@ -25,10 +26,10 @@ while True:
 	)
 
 #android notification
-print("sending telegram message")
-id = "6218744091"
-token = "6012387725:AAFOgyxlgmyxZ-4vJVwPIzF6Q7UfhrB7SKw"
-url = f"https://api.telegram.org/barry_ets_bot{token}/sendMessage"
-params = {"chat_id": id, "text": final}
-r = requests.get(url=url,params=params)
-time.sleep(60)
+	print("Sending telegram message")
+	id = "6218744091"
+	token = "6012387725:AAFOgyxlgmyxZ-4vJVwPIzF6Q7UfhrB7SKw"
+	url = f"https://api.telegram.org/bot{token}/sendMessage"
+	params = {"chat_id": id, "text": final}
+	r = requests.get(url=url,params=params)
+	time.sleep(600)
