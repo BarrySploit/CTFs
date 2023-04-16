@@ -13,6 +13,10 @@ def get_time_left():
 	days = int(hours)/24
 	final = f'{int(days)} days, {int(leftover_hours)} hours, and {int(leftover_min)} minutes to FREEDOM0!'
 	return final
+def check_if_noon():
+	hour = time.asctime().split()[3]
+	if hour == "12:00:00":
+		return True
 
 def send_notifications():
 	#windows notification
@@ -37,8 +41,8 @@ def send_notifications():
 def main():
 	print("Program start...")
 	while True:
-		send_notifications()
-		time.sleep(600)
+		if check_if_noon():
+			send_notifications()
 		
 if __name__ == "__main__":
 	main()
