@@ -39,11 +39,16 @@ def send_notifications():
 	params = {"chat_id": id, "text": final}
 	r = requests.get(url=url,params=params)
 
-def main():
+#use this if running in terminal in background
+def main1():
 	print("Program start...")
 	while True:
 		if check_if_noon():
 			send_notifications()
-		
+#use this if running as scheduled task
+def main2():
+	send_notifications()
+	exit()
+
 if __name__ == "__main__":
-	main()
+	main2()
