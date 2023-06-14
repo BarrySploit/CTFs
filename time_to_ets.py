@@ -3,7 +3,7 @@ from win10toast import ToastNotifier
 import requests
 
 def get_time_left():
-	ets_leave = 1688968800.0000000
+	ets_leave = 1688018400
 	current_time = time.time()
 	total_sec = ets_leave - current_time
 	minutes = int(total_sec) / 60
