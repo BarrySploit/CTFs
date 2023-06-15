@@ -57,7 +57,7 @@ function Invoke-Autoruns{
         }}
     }
     #Write file to working directory
-    $combined | ConvertTo-Csv | Out-File -FilePath .\Autoruns_Combined.csv | Write-Host "File has been writting to Autoruns_Combined.csv"
+    $combined | ConvertTo-Csv | Out-File -FilePath .\Autoruns_Combined.csv | Write-Host "File has been written to Autoruns_Combined.csv"
     #Clean up/Remove Autorunsc64 from endpoints
     foreach ($i in $online_computers){
         Write-Host "Cleaning up $i."
